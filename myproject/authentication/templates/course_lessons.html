@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.title }} - Danh sách bài học</title>
+
+    <style>
+    nav {
+    background-color: blue;
+    color: white;
+    padding: 15px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0; /* Đảm bảo nằm ở bên trái */
+    z-index: 1000; /* Đặt z-index để đè lên phần content */
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+        /* CSS cho section danh sách bài học */
+        .course-lessons {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0; /* Khoảng cách giữa các section */
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .course-lessons h2 {
+            font-weight: bold;
+            color: #333;
+            font-size: 20px;
+        }
+
+        /* CSS cho nút bắt đầu học */
+        .lesson-button {
+            background-color: #4267B2;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .lesson-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* CSS cho footer */
+        footer {
+            background-color: blue;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+
+        }
+
+        /* CSS cho phần content */
+        body {
+             font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="{% url 'home' %}">Back</a>
+
+    </nav>
+</header>
+
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+
+    <h2>Danh sách bài học</h2>
+    <ul>
+        {% for lesson in lessons %}
+        <section class="course-lessons">
+            <div>
+                <h2>{{ lesson.title }}</h2>
+            </div>
+            <div>
+                <a href="{% url 'lesson_detail' lesson.id %}" class="lesson-button">Bắt đầu học</a>
+            </div>
+        </section>
+        {% endfor %}
+    </ul>
+
+    <div style="height: 100px;"></div>
+    <footer>
+        <p>&copy; 2023 quan</p>
+    </footer>
+</body>
+</html>

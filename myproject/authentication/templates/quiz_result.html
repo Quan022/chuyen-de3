@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả </title>
+    </head>
+<body>
+    <h1>Kết quả bài kiểm tra - {{ quiz.title }}</h1>
+    <div class="quiz-results">
+        <p>Điểm số: {{ score }}/{{ total_questions }}</p>
+        <p>Tỷ lệ điểm: {{ percentage_score }}%</p>
+<!--        <p id="current-time">Thời gian hiện tại: Loading...</p>-->
+<!--        <p id="countdown">Thời gian còn lại: Loading...</p>-->
+    </div>
+    <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>
+
+<script>
+    var countdown = 300; // 300 seconds = 5 minutes
+    var timerInterval;
+
+    function startCountdown() {
+        var countdownElement = document.getElementById("countdown");
+
+        function updateCountdown() {
+            var minutes = Math.floor(countdown / 60);
+            var seconds = countdown % 60;
+            countdownElement.textContent = "Thời gian còn lại: " + minutes + " phút " + seconds + " giây";
+            if (countdown <= 0) {
+                clearInterval(timerInterval);
+                // Do something when time is up (e.g., auto-submit the quiz)
+                alert("Hết thời gian làm bài!");
+                // You can add your logic here to handle the end of the quiz.
+            }
+            countdown--;
+        }
+
+        updateCountdown();
+        timerInterval = setInterval(updateCountdown, 1000);
+    }
+
+    window.onload = startCountdown;
+</script>
+
+</body>
+</html>

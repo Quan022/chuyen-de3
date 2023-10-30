@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ lesson.title }}</title>
+    <style>
+       nav {
+    background-color: blue;
+    color: white;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Thay đổi màu và khoảng cách giữa các liên kết */
+nav a:first-child {
+    margin-right: 10px; /* Khoảng cách bên phải của liên kết đầu tiên */
+    /* Màu nền của liên kết đầu tiên */
+    padding: 5px 10px; /* Khoảng cách bên trong của liên kết đầu tiên */
+    border-radius: 5px; /* Đường viền cong của liên kết đầu tiên */
+    transition: background-color 0.3s; /* Hiệu ứng màu nền khi hover */
+}
+
+
+
+        /* CSS cho footer */
+        footer {
+            background-color: blue;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+
+        }
+
+        /* CSS cho nội dung bài học */
+        .lesson-content {
+            margin-top: 60px; /* Để tránh bị che bởi thanh điều hướng */
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .ckeditor-content {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: white;
+        }
+
+        /* Liên kết đến bài học trước và tiếp theo */
+        .lesson-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .lesson-links a {
+            color: #4267B2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .lesson-links a:hover {
+            color: #3a5a99;
+        }
+    </style>
+</head>
+<body>
+   <nav>
+    <div>
+        <a href="{% url 'course_lessons' course.id %}">Back</a>
+        {% if not lesson.has_quiz %}
+            <a href="{% url 'quiz_list' %}" style="margin-right: 20px;">Làm bài kiểm tra</a>
+        {% endif %}
+
+    </div>
+</nav>
+
+
+    <div class="lesson-content">
+
+
+
+        <h1>{{ lesson.title }}</h1>
+        <div class="ckeditor-content">
+            {{ lesson.content | safe }}
+        </div>
+
+
+    </div>
+
+    <div style="height: 100px;"></div>
+
+        <!-- Phần footer -->
+         <footer>
+        <p>&copy; 2023 quan</p>
+    </footer>
+
+</body>
+</html>

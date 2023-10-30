@@ -1,0 +1,99 @@
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Đăng ký</title>-->
+<!--    <style>-->
+<!--        /* Đặt CSS của bạn ở đây */-->
+<!--        body {-->
+<!--            background-color: lightgray;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--        }-->
+<!--        h1 {-->
+<!--             color: #333;-->
+<!--        }-->
+<!--        /* Thêm các quy tắc CSS khác tùy ý */-->
+<!--        /* Ví dụ: */-->
+<!--        form {-->
+<!--            margin: 20px;-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--        }-->
+<!--        button {-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            padding: 10px 20px;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Đăng ký</h1>-->
+
+
+<!--    <form  method="post">-->
+<!--        {% csrf_token %}-->
+<!--        {{ form.as_p }}-->
+<!--        <button type="submit">Đăng ký</button>-->
+<!--    </form>-->
+<!--    <p>Nếu đã có tài khoản, <a href="{% url 'login' %}">Đăng Nhập Ngay</a></p>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng ký</title>
+    <style>
+        /* Đặt CSS của bạn ở đây */
+        body {
+            background-color: lightgray;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .registration-box {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: -20px; /* Đưa form lên trên 1 chút */
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Thêm các quy tắc CSS khác tùy ý */
+    </style>
+</head>
+<body>
+    <div class="registration-box">
+        <h1>Đăng ký</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Đăng ký</button>
+        </form>
+        <p>Nếu đã có tài khoản, <a href="{% url 'login' %}">Đăng Nhập Ngay</a></p>
+    </div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,59 @@
+<h1>{{ test.title }}</h1>
+<p>Thời gian còn lại: <span id="timer">--:--</span></p>
+<p>Start Time: {{ test.start_time }}</p>
+<form method="post" action="{% url 'submit_test' test.id %}" id="quiz-form">
+  {% csrf_token %}
+  {% for question in questions %}
+    <fieldset>
+      <legend>{{ question.text }}</legend>
+      <input type="radio" name="question_{{ question.id }}" value="1"> {{ question.choice_1 }}<br>
+      <input type="radio" name="question_{{ question.id }}" value="2"> {{ question.choice_2 }}<br>
+      <input type="radio" name="question_{{ question.id }}" value="3"> {{ question.choice_3 }}<br>
+      <input type="radio" name="question_{{ question.id }}" value="4"> {{ question.choice_4 }}<br>
+    </fieldset>
+  {% endfor %}
+   <input type="submit" value="Nộp bài">
+</form>
+<script>
+function updateTimer(startTime, endTime) {
+    var timerElement = document.getElementById("timer");
+
+    function update() {
+        var now = new Date();
+        if (now < startTime) {
+            // Bài kiểm tra chưa bắt đầu
+            var timeRemaining = new Date(startTime - now);
+            var message = "Bài kiểm tra sẽ bắt đầu sau: ";
+        } else if (now > endTime) {
+            // Bài kiểm tra đã kết thúc
+            clearInterval(interval);
+            timerElement.textContent = "Hết giờ!";
+            return;
+        } else {
+            // Bài kiểm tra đang diễn ra
+            var timeRemaining = new Date(endTime - now);
+            var message = "Time Left: ";
+        }
+
+        var minutes = Math.floor(timeRemaining / 60000);
+        var seconds = Math.floor((timeRemaining % 60000) / 1000);
+
+        // Format thời gian
+        var formattedMinutes = minutes.toString().padStart(2, '0');
+        var formattedSeconds = seconds.toString().padStart(2, '0');
+
+        timerElement.textContent = message + formattedMinutes + ":" + formattedSeconds;
+    }
+
+    update(); // Gọi lần đầu để hiển thị thời gian ban đầu
+    var interval = setInterval(update, 1000); // Cập nhật thời gian mỗi giây
+}
+
+// Lấy thời gian bắt đầu và kết thúc từ model Django
+var startTimeString = "{{ test.start_time|date:'Y-m-d H:i:s' }}";
+var endTimeString = "{{ test.end_time|date:'Y-m-d H:i:s' }}";
+var startTime = new Date(startTimeString);
+var endTime = new Date(endTimeString);
+
+updateTimer(startTime, endTime);
+</script>

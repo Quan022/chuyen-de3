@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz.title }}</title>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>{{ quiz.title }}</h1>
+        <p>{{ quiz.description }}</p>
+
+        <!-- Countdown Timer -->
+        <div id="countdown" class="countdown">Thời gian còn lại: 5 phút</div>
+
+        <form method="post" action="{% url 'quiz_answer' quiz.id %}" id="quiz-form">
+            {% csrf_token %}
+            <h2>Câu hỏi:</h2>
+            <ul class="questions">
+                {% for question in quiz.question_set.all %}
+                    <li class="question" id="question_{{ question.id }}">
+                        {{ question.content }}
+                        <ul class="options">
+                            {% for choice in question.choice_set.all %}
+                                <li class="option">
+                                    <input type="radio" id="question_{{ question.id }}_choice_{{ choice.id }}" name="question_{{ question.id }}" value="{{ choice.id }}">
+                                    <label for="question_{{ question.id }}_choice_{{ choice.id }}">{{ choice.content }}</label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button id="previous-button">Previous</button>
+            <button id="next-button">Next</button>
+            <input type="submit" class="submit-button" value="Nộp bài kiểm tra" id="submit-button">
+        </form>
+    </div>
+
+    <script>
+        // JavaScript code to handle pagination
+        const questions = document.querySelectorAll(".question");
+        const nextButton = document.getElementById("next-button");
+        const previousButton = document.getElementById("previous-button");
+
+        let currentPage = 0;
+
+        function showCurrentPage() {
+            questions.forEach((question, index) => {
+                if (index === currentPage) {
+                    question.style.display = "block";
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Disable "Previous" button on the first question
+            previousButton.disabled = currentPage === 0;
+
+            // Disable "Next" button on the last question
+            nextButton.disabled = currentPage === questions.length - 1;
+        }
+
+        nextButton.addEventListener("click", () => {
+            currentPage++;
+            if (currentPage >= questions.length) {
+                currentPage = questions.length - 1;
+            }
+            showCurrentPage();
+        });
+
+        previousButton.addEventListener("click", () => {
+            currentPage--;
+            if (currentPage < 0) {
+                currentPage = 0;
+            }
+            showCurrentPage();
+        });
+
+        // Initialize the display
+        showCurrentPage();
+
+        // Countdown Timer
+        const countdownElement = document.getElementById("countdown");
+        let countdown = 300; // 300 seconds = 5 minutes
+
+        function updateCountdown() {
+            const minutes = Math.floor(countdown / 60);
+            const seconds = countdown % 60;
+            countdownElement.textContent = `Thời gian còn lại: ${minutes} phút ${seconds} giây`;
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                alert("Hết thời gian làm bài!"); // Thực hiện hành động khi hết thời gian
+                document.getElementById("quiz-form").submit(); // Tự động nộp bài khi hết thời gian
+            }
+            countdown--;
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+    </script>
+</body>
+</html>

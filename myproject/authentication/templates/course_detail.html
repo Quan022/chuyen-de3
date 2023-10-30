@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.title }}</title>
+</head>
+<body>
+    <h1>{{ course.title }}</h1>
+    <p>Người dạy: {{ course.instructor }}</p>
+    <h2>Bài học:</h2>
+    <ul>
+        {% for lesson in lessons %}
+            <li>
+                <a href="{% url 'lesson_detail' lesson.id %}"><strong>{{ lesson.title }}</strong></a><br>
+                Lý thuyết:<br>
+                {{ lesson.content }}
+                <br><br>
+                <strong>Bài kiểm tra:</strong> {{ lesson.title }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
